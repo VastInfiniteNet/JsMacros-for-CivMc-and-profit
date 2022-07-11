@@ -1,3 +1,13 @@
+/**
+ * A simple inventory sorter.
+ * Author: MotokoKusanagi#5346
+ * TODO: 
+ * - a better inplace sorting algorithm (quicksort)
+ * - an even better algo that isn't inplace (heapsort)
+ * - combine uncomplete stacks before sort
+ * - configurable/custom sorting order selection
+ */
+
 const inv = Player.openInventory()
 const sections = {
     main: [9,35],
