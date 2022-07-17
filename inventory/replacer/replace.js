@@ -2,13 +2,19 @@
 const {isBroke} = require("./isBroke.js")
 const {InvSlots, Logger} = require("./utils.js")
 
-const logger = new Logger(true, "replace.js")
+const logger = new Logger(false, "replace.js")
 const inv = Player.openInventory()
 
 /**
  * Replaces any item that runs out if there is a replacement.
  */
 const replace = function() {
+    if (GlobalVars.getBoolean("replaceSwap")) {
+        GlobalVars.putBoolean("replaceSwap", false)
+        logger.log("Change only from a previous replacement!")
+        return
+    }
+
     const result = isBroke(event.item, event.oldItem, event.offHand)
 
     if (!result) { // no replacing needed!
@@ -32,6 +38,7 @@ const replace = function() {
 
     inv.swap(currentSlot, replacementSlot)
     logger.log("Replaced item!")
+    GlobalVars.putBoolean("replaceSwap", true)
 }
 
 /**

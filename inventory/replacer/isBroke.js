@@ -1,7 +1,7 @@
 // Imports
 const {itemToString, InvSlots, Logger} = require("./utils.js")
 
-const logger = new Logger(true, "isBroke.js")
+const logger = new Logger(false, "isBroke.js")
 
 /**
  * Checks if a HeldItemChange event was triggered by an item breaking or ran out of item

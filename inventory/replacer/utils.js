@@ -31,6 +31,5 @@ const InvSlots = {
 module.exports = {
     itemToString: itemString,
     InvSlots: InvSlots,
-    debugLog: debugLog,
     Logger: Logger,
 }
