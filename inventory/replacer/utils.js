@@ -2,22 +2,29 @@ const itemString = function(item) {
     return `${item.getName().getString()} (${item.getCount()}) dura: (${item.getMaxDamage() - item.getDamage()}/${item.getMaxDamage()})`
 }
 
+
+const loggingLevels = {
+    prod: 0, // TODO: rename this!
+    info: 1,
+    debug: 2,
+}
+
 /**
  * Logger that logs only if enabled.
  */
 class Logger {
-    constructor(state=false, name="") {
-        this.isOn = state
+    constructor(level=loggingLevels.production, name="") {
+        this.level = level
         this.name = name
     }
 
-    log(arg) {
-        if (this.isOn)
+    log(arg, level=this.level) {
+        if (this.isOn && level <= this.level)
             Chat.log(arg)
     }
 
     toString() {
-        return `Logger '${this.name}' is ${this.isOn ? "on" : "off"}`
+        return `Logger '${this.name}' is ${this.level ? "on" : "off"}`
     }
 }
 
@@ -32,4 +39,5 @@ module.exports = {
     itemToString: itemString,
     InvSlots: InvSlots,
     Logger: Logger,
+    loggingLevels: loggingLevels
 }
