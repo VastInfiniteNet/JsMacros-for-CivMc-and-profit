@@ -1,27 +1,32 @@
+/**
+ * TODO:
+ * - MAKE SURE NOT USABLE IN PVP
+ * - make sure doesnt replace when inventory open
+ */
+
 // imports
 const {isBroke} = require("./isBroke.js")
 const {InvSlots, Logger, loggingLevels: llog} = require("./utils.js")
 
-const logger = new Logger(llog.production, "replace.js")
+const logger = new Logger(llog.info, "replace.js")
 const inv = Player.openInventory()
 
 /**
  * Replaces any item that runs out if there is a replacement.
  */
 const replace = function() {
-    if (GlobalVars.getBoolean("replaceSwap")) {
+    if (!!GlobalVars.getBoolean("replaceSwap")) {
         GlobalVars.putBoolean("replaceSwap", false)
-        logger.log("Change only from a previous replacement!")
+        logger.log("Ignoring change from a replacement!", llog.info)
         return
     }
 
     const result = isBroke(event.item, event.oldItem, event.offHand)
 
     if (!result) { // no replacing needed!
-        logger.log("No replacement required!", llog.info)
+        logger.log("No replacement required!", llog.debug)
         return
     }
-    Client.waitTick()
 
     const replacementSlot = findReplacementSlot(result)
     if (!replacementSlot) {

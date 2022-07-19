@@ -13,13 +13,13 @@ const loggingLevels = {
  * Logger that logs only if enabled.
  */
 class Logger {
-    constructor(level=loggingLevels.production, name="") {
+    constructor(level=loggingLevels.production, name="Logger") {
         this.level = level
         this.name = name
     }
 
     log(arg, level=this.level) {
-        if (this.isOn && level <= this.level)
+        if (level <= this.level)
             Chat.log(arg)
     }
 
