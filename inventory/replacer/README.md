@@ -3,6 +3,8 @@ Will automatically replace any tool that breaks or block that runs in your hand.
 
 Makes mining more seemless!
 
+It is against the rules on CivMc to use this for any purposes related to pvp. This includes swords, and potions replacement. I am working on excluding these items from being replacable.
+
 ### TODO LIST
 - [ ] Don't run while inventory is open
 - [ ] Enchant equivalency options
