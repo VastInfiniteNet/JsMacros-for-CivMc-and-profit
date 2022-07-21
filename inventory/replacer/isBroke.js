@@ -51,9 +51,15 @@ const isBroke = function(currentItem, oldItem, isOffHand) {
         return false
     }
 
-    // check if equivalent item is in inventory
+    // TODO: check if equivalent item is in inventory
     if (false) {
         logger.log("Item was just moved in inventory!", llog.debug)
+        return false
+    }
+
+    // TODO: check if valid item
+    if (false) {
+        logger.log("Unreplacable item!", llog.debug)
         return false
     }
 
