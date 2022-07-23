@@ -45,6 +45,26 @@ const startEnd = () => {
     return [startPos, endPos]
 }
 
+const distFromHere = () => {
+    const h3d = Hud.createDraw3D();
+    Hud.registerDraw3D(h3d)
+    const here = Player.getPlayer().getPos()
+
+    const crouchKey = KeyBind.getKeyBindings().get("key.sneak")
+    logger.log("Crouch to select last crop in row")
+    JsMacros.waitForEvent("Key", JavaWrapper.methodToJava( e => {
+        return e.key === crouchKey && e.action === 1
+    }))
+    let startPos = Player.getPlayer().getPos()
+    startPos = roundPos(startPos)
+    h3d.addBox(...posCoords(startPos), ...(posCoords(startPos).map(e=>e+1)),
+            0, 255, 0xffffff, 255, true)
+    logger.log(`last crop: ${startPos}`)
+
+    return here.add(startPos.scale(-1))
+}
+
 module.exports = {
-    startEnd: startEnd
+    startEnd: startEnd,
+    distFromHere: distFromHere,
 }
