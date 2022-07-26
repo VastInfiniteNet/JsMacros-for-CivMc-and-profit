@@ -1,8 +1,10 @@
 // Imports
-const {itemToString, InvSlots, Logger, loggingLevels: llog} = require("./utils.js")
+const { offHandSlot, hotBarSlots } = require("../../lib/inventory.js")
+const { itemToString } = require("../../lib/item.js")
+const { Logger } = require("../../lib/Logger.js")
 
 // TODO: logging levels
-const logger = new Logger(llog.info, "isBroke.js")
+const logger = new Logger("isBroke", "isBroke.log")
 
 /**
  * Checks if a HeldItemChange event was triggered by an item breaking or ran out of item
@@ -14,18 +16,24 @@ const isBroke = function(currentItem, oldItem, isOffHand) {
     const oldSlot = GlobalVars.getDouble("oldSlotIndex")
     const oldItemName = oldItem.getName().getString()
     
-    var currentSlot = InvSlots.hotBar + inv.getSelectedHotbarSlotIndex()
+    var currentSlot = hotBarSlots()[0] + inv.getSelectedHotbarSlotIndex()
     if (isOffHand) {
-        logger.log("Item change in offhand", llog.info)
+        logger.log("Item change in offhand", Logger.llog.info)
         
-        currentSlot = InvSlots.offHand
+        currentSlot = offHandSlot()
     }
     const currentItemName = currentItem.getName().getString()
     
     GlobalVars.putDouble("oldSlotIndex", currentSlot)
 
-    logger.log(`Old item: ${itemToString(oldItem)}`, llog.debug)
-    logger.log(`New item: ${itemToString(currentItem)}`, llog.debug)
+    logger.log(`Old item: ${itemToString(oldItem)}`, Logger.llog.debug)
+    logger.log(`New item: ${itemToString(currentItem)}`, Logger.llog.debug)
+
+    // TODO: check if inventory open
+    if (false) {
+        logger.log("Inventory is open!", Logger.llog.info)
+        return false
+    }
 
     // check still in same slot
     if (currentSlot !== oldSlot) {
@@ -35,36 +43,37 @@ const isBroke = function(currentItem, oldItem, isOffHand) {
 
     // check if 1 left
     if (oldItem.getCount() !== 1) {
-        logger.log("Not empty!", llog.debug)
+        logger.log("Not empty!", Logger.llog.info)
         return false
     }
 
     // check that old item has changed
     if (oldItemName === "Air" || currentItemName === oldItemName) {
-        logger.log("Didn't run out!", llog.debug)
+        logger.log("Didn't run out!", Logger.llog.info)
         return false
     }
 
     // check old item was at break durability (1)
     if (oldItem.getMaxDamage() > 0 && oldItem.getMaxDamage() - oldItem.getDamage() !== 1) {
-        logger.log("Item still has durability!", llog.debug)
+        logger.log("Item still has durability!", Logger.llog.info)
         return false
     }
 
     // TODO: check if equivalent item is in inventory
     if (false) {
-        logger.log("Item was just moved in inventory!", llog.debug)
+        logger.log("Item was just moved in inventory!", Logger.llog.info)
         return false
     }
 
     // TODO: check if valid item
     if (false) {
-        logger.log("Unreplacable item!", llog.debug)
+        logger.log("Unreplacable item!", Logger.llog.info)
         return false
     }
 
+
     // item broken probably or just dropped lol
-    logger.log("Current item ran out!", llog.info)
+    logger.log("Current item ran out!", Logger.llog.prod)
     return oldItem
 }
 
