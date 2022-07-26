@@ -6,7 +6,7 @@ Makes mining more seemless!
 It is against the rules on CivMc to use this for any purposes related to pvp. This includes swords, and potions replacement. I am working on excluding these items from being replacable.
 
 ### TODO LIST
-- [ ] Don't run while inventory is open
+- [X] Don't run while inventory is open
 - [ ] Enchant equivalency options
-- [ ] Don't replace swords
-- [ ] Don't replace potions
+- [X] Don't replace swords
+- [X] Don't replace potions

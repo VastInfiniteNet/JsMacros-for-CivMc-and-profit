@@ -1,10 +1,19 @@
 // Imports
 const { offHandSlot, hotBarSlots } = require("../../lib/inventory.js")
-const { itemToString } = require("../../lib/item.js")
+const { itemToString, itemName } = require("../../lib/item.js")
 const { Logger } = require("../../lib/Logger.js")
 
 // TODO: logging levels
 const logger = new Logger("isBroke", "isBroke.log")
+
+// ----- CONFIG ------
+const BLACK_LIST = ["Sword", "Potion"]
+/**
+ * 
+ */
+const ENCHANT_MODE = "off"
+
+// ----- END OF CONFIG -----
 
 /**
  * Checks if a HeldItemChange event was triggered by an item breaking or ran out of item
@@ -30,7 +39,7 @@ const isBroke = function(currentItem, oldItem, isOffHand) {
     logger.log(`New item: ${itemToString(currentItem)}`, Logger.llog.debug)
 
     // TODO: check if inventory open
-    if (false) {
+    if (Hud.getOpenScreenName() !== null) {
         logger.log("Inventory is open!", Logger.llog.info)
         return false
     }
@@ -65,12 +74,11 @@ const isBroke = function(currentItem, oldItem, isOffHand) {
         return false
     }
 
-    // TODO: check if valid item
-    if (false) {
+    // check if non-blacklisted item
+    if ( BLACK_LIST.some(e => itemName(oldItem).includes(e)) ) {
         logger.log("Unreplacable item!", Logger.llog.info)
         return false
     }
-
 
     // item broken probably or just dropped lol
     logger.log("Current item ran out!", Logger.llog.prod)
