@@ -8,10 +8,6 @@ const logger = new Logger("isBroke", "isBroke.log")
 
 // ----- CONFIG ------
 const BLACK_LIST = ["Sword", "Potion"]
-/**
- * 
- */
-const ENCHANT_MODE = "off"
 
 // ----- END OF CONFIG -----
 
@@ -38,7 +34,7 @@ const isBroke = function(currentItem, oldItem, isOffHand) {
     logger.log(`Old item: ${itemToString(oldItem)}`, Logger.llog.debug)
     logger.log(`New item: ${itemToString(currentItem)}`, Logger.llog.debug)
 
-    // TODO: check if inventory open
+    // check if inventory open
     if (Hud.getOpenScreenName() !== null) {
         logger.log("Inventory is open!", Logger.llog.info)
         return false
@@ -46,7 +42,7 @@ const isBroke = function(currentItem, oldItem, isOffHand) {
 
     // check still in same slot
     if (currentSlot !== oldSlot) {
-        logger.log(`Different slots!: old: ${oldSlot}, current: ${currentSlot}`, llog.debug)
+        logger.log(`Different slots!: old: ${oldSlot}, current: ${currentSlot}`, Logger.llog.debug)
         return false    
     }
 
