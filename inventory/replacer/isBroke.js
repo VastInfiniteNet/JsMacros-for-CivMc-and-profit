@@ -1,9 +1,15 @@
+/**
+ * Checks if a HeldItemChange event was the result of an item breaking/running out or not.
+ * 
+ * @author MotokoKusanagi#5346
+ */
+
+
 // Imports
 const { offHandSlot, hotBarSlots } = require("../../lib/inventory.js")
 const { itemToString, itemName } = require("../../lib/item.js")
 const { Logger } = require("../../lib/Logger.js")
 
-// TODO: logging levels
 const logger = new Logger("isBroke", "isBroke.log")
 
 // ----- CONFIG ------
@@ -12,10 +18,13 @@ const BLACK_LIST = ["Sword", "Potion"]
 // ----- END OF CONFIG -----
 
 /**
- * Checks if a HeldItemChange event was triggered by an item breaking or ran out of item
- * @returns item that broken or false if nothing broke
+ * Decides if held item change was from item break/runnout or not.
+ * @param {ItemStackHelper} currentItem old held item
+ * @param {ItemStackHelper} oldItem     new held item
+ * @param {Boolean} isOffHand if item change happened in off hand
+ * @returns {Boolean} whether or not an item broke/ranout
  */
-const isBroke = function(currentItem, oldItem, isOffHand) {
+ function isBroke(currentItem, oldItem, isOffHand) {
     const inv = Player.openInventory()
 
     const oldSlot = GlobalVars.getDouble("oldSlotIndex")
@@ -78,7 +87,7 @@ const isBroke = function(currentItem, oldItem, isOffHand) {
 
     // item broken probably or just dropped lol
     logger.log("Current item ran out!", Logger.llog.prod)
-    return oldItem
+    return true
 }
 
 module.exports = {

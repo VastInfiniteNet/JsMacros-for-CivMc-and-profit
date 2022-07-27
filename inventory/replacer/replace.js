@@ -1,25 +1,32 @@
 /**
- * TODO:
- * - MAKE SURE NOT USABLE IN PVP
- * - make sure doesnt replace when inventory open
+ * Automatically replaces a held tool that breaks, or a held item that runs out with a compatible replacement.  
+ * 
+ * @author MotokoKusanagi#5346
+ * @contact MotokoKusanagi#5346 discord
+ * @contact screwthisusernameprocess@gmail.com
  */
+
 
 // imports
 const { hotBarSlots, mainSlots, offHandSlot } = require("../../lib/inventory.js")
 const { itemName } = require("../../lib/item.js")
 const {isBroke} = require("./isBroke.js")
 const {Logger} = require("../../lib/Logger.js")
+
 // ----- CONFIG -----
+
 /**
  * "off" - won't consider enchants when deciding replacement.
  *         item replacement equivalent if they share name.
  * 
  * "special" - item replacement equivalent if they share a special enchant 'category'
- *          Categories: silk touch
+ *          Categories: silk touch,
  * 
  * "strict" - item replacement equivalent if they share identical enchants. 
  */
  const ENCHANT_MODE = "off"
+
+ const SPECIAL_ENCHANTS = ["silk touch"]
 
 // ----- END OF CONFIG -----
 
@@ -29,54 +36,64 @@ const inv = Player.openInventory()
 
 /**
  * Replaces any item that runs out if there is a replacement.
+ * @param {ItemStackHelper} oldI old item
+ * @param {ItemStackHelper} newI new item
+ * @param {Boolean} offHand if change happened in off hand
+ * @return {Boolean} whether or not a replacement happened
  */
-const replace = function() {
+function replace(oldI=event.oldItem, newI=event.item, offHand=event.offHand) {
     if (!!GlobalVars.getBoolean("replaceSwap")) {
         GlobalVars.putBoolean("replaceSwap", false)
         logger.log("Ignoring change from a replacement!", Logger.llog.info)
-        return
+        return false
     }
 
-    const result = isBroke(event.item, event.oldItem, event.offHand)
-
-    if (!result) { // no replacing needed!
+    if (!isBroke(newI, oldI, offHand)) { // no replacing needed!
         logger.log("No replacement required!", Logger.llog.debug)
-        return
+        return false
     }
 
-    const replacementSlot = findReplacementSlot(result)
+    const replacementSlot = findReplacementSlot(oldI)
     if (!replacementSlot) {
-        logger.log(`No replacement found for ${result.getName().getString()}`, Logger.llog.info)
-        return
+        logger.log(`No replacement found for ${itemName(oldI)}`, Logger.llog.info)
+        return false
     }
 
     var currentSlot = hotBarSlots()[0] + inv.getSelectedHotbarSlotIndex()
-    if (event.offHand) {
+    if (offHand) {
         logger.log("Item to replace in offhand", Logger.llog.debug)
         currentSlot = offHandSlot()
     }
 
 
     inv.swap(currentSlot, replacementSlot)
+    World.playSound("entity.player.levelup", 1, 1)
     logger.log("Replaced item!", Logger.llog.prod)
     GlobalVars.putBoolean("replaceSwap", true)
+    return true
 }
 
 /**
- * Finds the slot of item in inventory that matches name.
- * @param {*} toReplace item to replace.
- * @returns slot number of replacement, null if no replacement.
+ * Finds the slot of item in inventory that is a suitable replacement.
+ * @param {ItemStackHelper} toReplace item to replace.
+ * @returns {Number} slot number of replacement, null if no replacement.
  */
 function findReplacementSlot(toReplace) {
     for (let k of [...hotBarSlots(), ...mainSlots()]) {
         if (itemName(inv.getSlot(k)) === itemName(toReplace) && validEnchant(inv.getSlot(k), toReplace)) {
-            logger.log(`Found replacement in slot ${k}: ${inv.getSlot(k).getName().getString()} === ${toReplace.getName().getString()}`, Logger.llog.debug)
+            logger.log(`Found replacement in slot ${k}: ${itemName(inv.getSlot(k))} === ${itemName(toReplace)}`, Logger.llog.debug)
             return k
         }
     }
     return null
 }
 
+/**
+ * Checks if replacement item has equivalent enchants, given the enchant mode.
+ * @param {ItemStackHelper} item item being replaced
+ * @param {ItemStackHelper} candidate possible replacement
+ * @returns whether or not candidate has equivalent enchants
+ */
 function validEnchant(item, candidate) {
     if (!item.getNBT()) { // items dont have NBT data
         logger.log("Items can't have enchants", Logger.llog.debug)
