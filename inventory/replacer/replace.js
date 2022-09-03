@@ -9,7 +9,7 @@
 
 // imports
 const { hotBarSlots, mainSlots, offHandSlot } = require("../../lib/inventory.js")
-const { itemName } = require("../../lib/item.js")
+const { itemName, itemId } = require("../../lib/item.js")
 const {isBroke} = require("./isBroke.js")
 const {Logger} = require("../../lib/Logger.js")
 
@@ -49,7 +49,7 @@ function replace(oldI=event.oldItem, newI=event.item, offHand=event.offHand) {
     }
 
     if (!isBroke(newI, oldI, offHand)) { // no replacing needed!
-        logger.log("No replacement required!", Logger.llog.debug)
+        logger.log("No replacement required!", Logger.llog.info)
         return false
     }
 
@@ -62,12 +62,14 @@ function replace(oldI=event.oldItem, newI=event.item, offHand=event.offHand) {
     var currentSlot = hotBarSlots()[0] + inv.getSelectedHotbarSlotIndex()
     if (offHand) {
         logger.log("Item to replace in offhand", Logger.llog.debug)
-        currentSlot = offHandSlot()
+        currentSlot = offHandSlot()[0]
     }
 
-
+    Client.waitTick(2)
     inv.swap(currentSlot, replacementSlot)
+    Client.waitTick(2)
     World.playSound("entity.player.levelup", 1, 1)
+    Client.waitTick(2)
     logger.log("Replaced item!", Logger.llog.prod)
     GlobalVars.putBoolean("replaceSwap", true)
     return true
@@ -80,7 +82,7 @@ function replace(oldI=event.oldItem, newI=event.item, offHand=event.offHand) {
  */
 function findReplacementSlot(toReplace) {
     for (let k of [...hotBarSlots(), ...mainSlots()]) {
-        if (itemName(inv.getSlot(k)) === itemName(toReplace) && validEnchant(inv.getSlot(k), toReplace)) {
+        if (itemId(inv.getSlot(k)) === itemId(toReplace) && validEnchant(inv.getSlot(k), toReplace)) {
             logger.log(`Found replacement in slot ${k}: ${itemName(inv.getSlot(k))} === ${itemName(toReplace)}`, Logger.llog.debug)
             return k
         }
