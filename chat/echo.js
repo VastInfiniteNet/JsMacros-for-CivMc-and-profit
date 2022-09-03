@@ -1,8 +1,8 @@
-const {Logger, llogs} = require("../lib/logging/Logger.js") 
+const {Logger} = require("../lib/Logger.js") 
 
-const logger = new Logger(llogs.debug, "echo", "echo.log")
+const logger = new Logger("echo", "echo.log")
 
 // MADE BY discord: MotokoKusanagi#5346
 // echos recieved chat messages back as logs
 // sent as script to be triggered by "recvmessage" event
-logger.log(`Message: '${event.text.getString()}'`)
+logger.log(`'${event.text.getString()}'`)
