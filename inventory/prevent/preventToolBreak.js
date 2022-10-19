@@ -7,7 +7,9 @@ const {itemId} = require("../../lib/item.js")
 const MIN_DURABILITY = 10
 const items = [
     "minecraft:diamond_pickaxe",
-    "minecraft:diamond_hoe"
+    "minecraft:diamond_hoe",
+    "minecraft:diamond_shovel",
+    "minecraft:diamond_axe"
 ]
 
 /******** END OF CONFIG ********/
