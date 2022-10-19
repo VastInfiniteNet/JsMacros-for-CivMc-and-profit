@@ -1,7 +1,9 @@
 # What is this?
 This is a repo for helpful scripts, and (hopefully) useful resources for learning JsMacros. 
 
-Currently all scripts are JavaScript, and will probably stay that way. I am using this to help learn basic JavaScript outside of a web dev context.
+Currently most scripts are JavaScript. I am using this to help learn basic JavaScript outside of a web dev context.
+
+I am in the process of learning about TypeScript and will probably *slowly* transition all scripts being primiarly written in TS and having a JS verison as well.
 
 ## What is this for?
 These scripts were made and intended to be used on [CivMc](https://www.reddit.com/r/CivMC/) minecraft server. Scripts were made to follow the [rules](https://civwiki.org/wiki/Botting#Botting_Rules) on said server. 
