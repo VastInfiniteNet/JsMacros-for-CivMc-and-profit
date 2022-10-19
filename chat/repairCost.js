@@ -1,7 +1,7 @@
 const {Logger} = require("../lib/Logger.js") 
 const {heldItem} = require("../lib/inventory.js")
 
-const logger = new Logger("repair cost", "repairCost.log", chatLevel=Logger.llog.debug)
+const logger = new Logger("repair cost", "repairCost.log")
 
 function printRepairCost() {
     const item = heldItem.getNBT()
@@ -14,7 +14,7 @@ function printRepairCost() {
         repairCost = repairCost.asNumberHelper().asInt()
     const partialRepairFee = 2
     const totalRepairCost = repairCost + partialRepairFee
-    logger.log(`${heldItem.getName().getString()} (times repaired: ${Math.log2(repairCost+1)}):
+    logger.Prod(`${heldItem.getName().getString()} (times repaired: ${Math.log2(repairCost+1)}):
     ${totalRepairCost} levels to repair again`)
     //Bottles needed: ${}-${}`)
 }

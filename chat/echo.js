@@ -5,4 +5,4 @@ const logger = new Logger("echo", "echo.log")
 // MADE BY discord: MotokoKusanagi#5346
 // echos recieved chat messages back as logs
 // sent as script to be triggered by "recvmessage" event
-logger.log(`'${event.text.getString()}'`)
+logger.Info(`'${event.text.getString()}'`)
