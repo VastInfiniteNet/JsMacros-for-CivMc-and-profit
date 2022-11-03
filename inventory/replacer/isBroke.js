@@ -32,7 +32,7 @@ const BLACK_LIST = ["sword", "potion", "bucket"]
     
     var currentSlot = hotBarSlots()[0] + inv.getSelectedHotbarSlotIndex()
     if (isOffHand) {
-        logger.log("Item change in offhand", Logger.llog.debug)
+        logger.Debug("Item change in offhand")
         
         currentSlot = offHandSlot()[0]
     }
@@ -40,53 +40,53 @@ const BLACK_LIST = ["sword", "potion", "bucket"]
     
     GlobalVars.putDouble("oldSlotIndex", currentSlot)
 
-    logger.log(`Old     item: ${itemToString(oldItem)}`, Logger.llog.debug)
-    logger.log(`Current item: ${itemToString(currentItem)}`, Logger.llog.debug)
+    logger.Debug(`Old     item: ${itemToString(oldItem)}`)
+    logger.Debug(`Current item: ${itemToString(currentItem)}`)
 
     // check if inventory open
     if (Hud.getOpenScreenName() !== null) {
-        logger.log(`Inventory ${Hud.getOpenScreenName()} is open!`, Logger.llog.info)
+        logger.Info(`Inventory ${Hud.getOpenScreenName()} is open!`)
         return false
     }
 
     // check still in same slot
     if (currentSlot !== oldSlot) {
-        logger.log(`Different slots!: old: ${oldSlot}, current: ${currentSlot}`, Logger.llog.info)
+        logger.Info(`Different slots!: old: ${oldSlot}, current: ${currentSlot}`)
         return false    
     }
 
     // check if 1 left
     if (oldItem.getCount() !== 1) {
-        logger.log(`Not empty! ${oldItem.getCount()} left!`, Logger.llog.info)
+        logger.Info(`Not empty! ${oldItem.getCount()} left!`)
         return false
     }
 
     // check that old item has changed
     if (oldItemName === "Air" || currentItemName === oldItemName) {
-        logger.log("Didn't run out!", Logger.llog.info)
+        logger.Info("Didn't run out!")
         return false
     }
 
     // check old item had low durability
     if (oldItem.getMaxDamage() > 0 && oldItem.getMaxDamage() - oldItem.getDamage() >= 5) {
-        logger.log(`Item still has durability! (${oldItem.getDamage()} left)`, Logger.llog.info)
+        logger.Info(`Item still has durability! (${oldItem.getDamage()} left)`)
         return false
     }
 
     // TODO: check if equivalent item is in inventory
     if (isSimilarItemInInventory(oldItem)) {
-        logger.log("Item was just moved in inventory!", Logger.llog.info)
+        logger.Info("Item was just moved in inventory!")
         return false
     }
 
     // check if non-blacklisted item
     if ( BLACK_LIST.some(e => itemId(oldItem).includes(e)) ) {
-        logger.log(`Unreplacable item (${itemId(oldItem)})!`, Logger.llog.info)
+        logger.Info(`Unreplacable item (${itemId(oldItem)})!`)
         return false
     }
 
     // item broken probably or just dropped lol
-    logger.log("Current item ran out!", Logger.llog.prod)
+    logger.Prod("Current item ran out!")
     return true
 }
 

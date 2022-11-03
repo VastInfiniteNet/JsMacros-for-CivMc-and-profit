@@ -44,24 +44,24 @@ const inv = Player.openInventory()
 function replace(oldI=event.oldItem, newI=event.item, offHand=event.offHand) {
     if (!!GlobalVars.getBoolean("replaceSwap")) {
         GlobalVars.putBoolean("replaceSwap", false)
-        logger.log("Ignoring change from a replacement!", Logger.llog.info)
+        logger.Info("Ignoring change from a replacement!")
         return false
     }
 
     if (!isBroke(newI, oldI, offHand)) { // no replacing needed!
-        logger.log("No replacement required!", Logger.llog.info)
+        logger.Info("No replacement required!")
         return false
     }
 
     const replacementSlot = findReplacementSlot(oldI)
     if (!replacementSlot) {
-        logger.log(`No replacement found for ${itemName(oldI)}`, Logger.llog.info)
+        logger.Info(`No replacement found for ${itemName(oldI)}`)
         return false
     }
 
     var currentSlot = hotBarSlots()[0] + inv.getSelectedHotbarSlotIndex()
     if (offHand) {
-        logger.log("Item to replace in offhand", Logger.llog.debug)
+        logger.Info("Item to replace in offhand")
         currentSlot = offHandSlot()[0]
     }
 
@@ -70,7 +70,7 @@ function replace(oldI=event.oldItem, newI=event.item, offHand=event.offHand) {
     Client.waitTick(2)
     World.playSound("entity.player.levelup", 1, 1)
     Client.waitTick(2)
-    logger.log("Replaced item!", Logger.llog.prod)
+    logger.Prod("Replaced item!")
     GlobalVars.putBoolean("replaceSwap", true)
     return true
 }
@@ -83,7 +83,7 @@ function replace(oldI=event.oldItem, newI=event.item, offHand=event.offHand) {
 function findReplacementSlot(toReplace) {
     for (let k of [...hotBarSlots(), ...mainSlots()]) {
         if (itemId(inv.getSlot(k)) === itemId(toReplace) && validEnchant(inv.getSlot(k), toReplace)) {
-            logger.log(`Found replacement in slot ${k}: ${itemName(inv.getSlot(k))} === ${itemName(toReplace)}`, Logger.llog.debug)
+            logger.Debug(`Found replacement in slot ${k}: ${itemName(inv.getSlot(k))} === ${itemName(toReplace)}`)
             return k
         }
     }
@@ -98,15 +98,15 @@ function findReplacementSlot(toReplace) {
  */
 function validEnchant(item, candidate) {
     if (!item.getNBT()) { // items dont have NBT data
-        logger.log("Items can't have enchants", Logger.llog.debug)
+        logger.Debug("Items can't have enchants")
         return true
     }
     if (ENCHANT_MODE === "off") {
-        logger.log("Items don't care about enchants", Logger.llog.debug)
+        logger.Debug("Items don't care about enchants")
         return true
     }
     if (ENCHANT_MODE === "special") {
-        logger.log("Items match special type")
+        logger.Debug("Items match special type")
         return true
     }
     return item.getNBT().get("Enchantments").asString() === 

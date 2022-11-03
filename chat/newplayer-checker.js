@@ -1,6 +1,6 @@
 const {Logger} = require("../lib/Logger.js") 
 
-const logger = new Logger("new player name checker", "namechecker.log", Logger.llog.info)
+const logger = new Logger("new player name checker", "namechecker.log")
 
 function check() {
     const content = event.text.getString().split(" ")
@@ -10,8 +10,8 @@ function check() {
     if (content.join(' ') !== TARGET_PART) {
         return
     }
-    logger.log(event.text.getString())
-    logger.log(`Check name: https://namemc.com/search?q=${poss_name}`, Logger.llog.prod)
+    logger.Prod(event.text.getString())
+    logger.Prod(`Check name: https://namemc.com/search?q=${poss_name}`)
 }
 
 check()
