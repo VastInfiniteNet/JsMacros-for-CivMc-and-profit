@@ -1,11 +1,14 @@
-import { playerPos } from "./player"
+import { Constants } from "./Constants"
+import { roundPosArray } from "./Coords"
+import { DIRECTIONS, getDirection } from "./Navigation"
+import { playerPos } from "./Player"
 
-class LogOptions {
-    positioning: boolean
-
-    constructor(positioning: boolean=false) {
-        this.positioning = positioning
-    }
+export enum LogOptions {
+    positioning =   1 << 0, // includes current player location
+    direction =     1 << 1, // include current player direction
+    temp3 =         1 << 2,
+    temp4 =         1 << 3,
+    temp5 =         1 << 4,
 }
 
 /**
@@ -21,10 +24,10 @@ class Logger {
         error: 4,
     }
 
-    name: string;
+    name: string
     output_filename: string
-    options: LogOptions
-
+    options: number
+    
 
     /**
      * 
@@ -32,9 +35,14 @@ class Logger {
      * @param {string} outputFile log file location
      * @param {object} options additional logging options
      */
-    constructor(name: string, outputFile: string="", options: LogOptions=new LogOptions()) {
+    constructor(name: string, 
+                outputFile: string = "", 
+                options: number = 0) 
+    {
         this.name = name
-        this.output_filename = outputFile
+        if (!FS.exists(Constants.LOG_FOLDER + Constants.SERVER_FOLDER))
+            FS.makeDir(Constants.LOG_FOLDER + Constants.SERVER_FOLDER)
+        this.output_filename = Constants.LOG_FOLDER + Constants.SERVER_FOLDER + outputFile
         this.options = options
     }
 
@@ -57,8 +65,9 @@ class Logger {
             const prefix = `${date_prefix} ${logger_name}`
 
             // optionals
-            const position = this.options.positioning ? `${playerPos()} ` : ''
-            const optionals = `${position}`
+            const position = this.options & LogOptions.positioning ? `${roundPosArray(playerPos())} ` : ''
+            const direction = this.options & LogOptions.direction ? `${DIRECTIONS[getDirection()]}` : ''
+            const optionals = `[${position}] [${direction}]`
             
             const message = `${prefix}: ${optionals} ${arg}\n`
 
@@ -95,8 +104,8 @@ class Logger {
      * 
      * @returns 
      */
-    toString() {
-        return `Logger '${this.name}' ${this.output_filename ? this.output_filename : ""}`
+    toString(): string {
+        return `Logger '${this.name}' ${this.output_filename ? this.output_filename : ''} ${this.options}`
     }
 }
 
