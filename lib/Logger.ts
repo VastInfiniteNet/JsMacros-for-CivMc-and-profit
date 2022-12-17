@@ -11,18 +11,20 @@ export enum LogOptions {
     temp5 =         1 << 4,
 }
 
+export enum Loglevel {
+    none =  -1,
+    prod = 0, // TODO: rename this!
+    info = 1,
+    warning = 2,
+    debug = 3,
+    error = 4,
+}
+
 /**
  * Logger that logs lol.
  */
 class Logger {
-    static level = {
-        none: -1,
-        prod: 0, // TODO: rename this!
-        info: 1,
-        warning: 2,
-        debug: 3,
-        error: 4,
-    }
+    
 
     name: string
     output_filename: string
@@ -51,7 +53,7 @@ class Logger {
      * @param {string} arg what to log
      * @param {number} level priority of what to log
      */
-    log(arg: string, level: number=Logger.level.debug, display: boolean=false) {
+    log(arg: string, level: number=Loglevel.debug, display: boolean=false) {
         if (display)
             Chat.log(arg)
 
@@ -59,10 +61,10 @@ class Logger {
             // prefixes 
             const d = new Date()
             const date_prefix = `[${ d.toLocaleDateString()} ${d.toLocaleTimeString()}]`
-            const log_level_prefix = `[${level}]`
+            const log_level_prefix = `[${Loglevel[level]}]`
             const logger_name = `[${this.name}]`
 
-            const prefix = `${date_prefix} ${logger_name}`
+            const prefix = `${date_prefix} ${logger_name} ${log_level_prefix}`
 
             // optionals
             let optionals = ''
@@ -79,23 +81,23 @@ class Logger {
     }
 
     Info(arg:string, display: boolean=false) {
-        this.log(arg, Logger.level.info, display)
+        this.log(arg, Loglevel.info, display)
     }
 
     Warn(arg:string, display: boolean=false) {
-        this.log(arg, Logger.level.warning, display)
+        this.log(arg, Loglevel.warning, display)
     }
 
     Debug(arg:string, display: boolean=false) {
-        this.log(arg, Logger.level.debug, display)
+        this.log(arg, Loglevel.debug, display)
     }
 
     Error(arg:string, display: boolean=true) {
-        this.log(arg, Logger.level.error, display)
+        this.log(arg, Loglevel.error, display)
     }
 
     Prod(arg:string, display: boolean=true) {
-        this.log(arg, Logger.level.prod, display)
+        this.log(arg, Loglevel.prod, display)
     }
 
     Log(arg:string, level:number, display: boolean=false) {
