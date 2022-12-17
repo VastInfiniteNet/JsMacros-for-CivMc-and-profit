@@ -1,10 +1,10 @@
-const {Logger} = require("../lib/Logger.js") 
-const { playerPos } = require("../lib/player.js")
+import { Logger, LogOptions } from "../lib/Logger"
+import { playerPos } from "../lib/Player"
 
-const logger = new Logger("diamond pause", "dpause.log")
+const logger: Logger = new Logger("diamond pause", "dpause.log", LogOptions.direction | LogOptions.positioning)
 
 function prevent() {
-    const content = event.text.getString()
+    const content = (event as Events.RecvMessage).text.getString()
     const TARGET_PART = "You sense a diamond nearby"
 
     if (content.substring(0,TARGET_PART.length) !== TARGET_PART)
