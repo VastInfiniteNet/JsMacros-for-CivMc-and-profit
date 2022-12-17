@@ -10,7 +10,7 @@ function check() {
     if (content.join(' ') !== TARGET_PART) {
         return
     }
-    logger.Prod(event.text.getString())
+    logger.Info(event.text.getString())
     logger.Prod(`Check name: https://namemc.com/search?q=${poss_name}`)
 }
 

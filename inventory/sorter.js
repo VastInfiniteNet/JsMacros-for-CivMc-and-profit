@@ -45,8 +45,8 @@ function sortInv(section) {
     const goal = [...SLOTS]
     goal.sort(cmpFunc)
 
-    Chat.log(`Start slots: ${start.join(" ")}`)
-    Chat.log(`Goal slots:  ${goal.join(" ")}`)
+    //Chat.log(`Start slots: ${start.join(" ")}`)
+    //Chat.log(`Goal slots:  ${goal.join(" ")}`)
 
     const base = Math.min(...SLOTS)
     const destinationForSlot = (slotNum) => base + goal.indexOf(slotNum)
