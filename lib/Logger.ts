@@ -65,11 +65,14 @@ class Logger {
             const prefix = `${date_prefix} ${logger_name}`
 
             // optionals
-            const position = this.options & LogOptions.positioning ? `${roundPosArray(playerPos())} ` : ''
-            const direction = this.options & LogOptions.direction ? `${DIRECTIONS[getDirection()]}` : ''
-            const optionals = `[${position}] [${direction}]`
+            let optionals = ''
+            if (this.options) {
+                optionals += this.options & LogOptions.positioning ? ` [${roundPosArray(playerPos())}]` : ''
+                optionals += this.options & LogOptions.direction ? ` [${DIRECTIONS[getDirection()]}]` : ''
+            }
+           
             
-            const message = `${prefix}: ${optionals} ${arg}\n`
+            const message = `${prefix}:${optionals} ${arg}\n`
 
             FS.open(this.output_filename).append(message)
         }
