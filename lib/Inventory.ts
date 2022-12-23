@@ -24,7 +24,7 @@ type InventorySection = InventoryStorageSections | ArmorSlotSections | CraftingS
  * @param section 
  * @returns 
  */
-function getInvSectionSlots(section: InventorySection): number[] {
+export function getInvSectionSlots(section: InventorySection): number[] {
     const sectionSlots = new Array<number>()
     for (var slot of Player.openInventory().getMap().get(section)) {
         sectionSlots.push(slot)
