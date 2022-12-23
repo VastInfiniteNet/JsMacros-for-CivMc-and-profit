@@ -18,7 +18,6 @@ export enum CraftingSlotSections{
     craft_out = "craft_out"
 } 
 type InventorySection = InventoryStorageSections | ArmorSlotSections | CraftingSlotSections
-type EmptySlot = null
 
 /**
  * Inventory slot numbers associated with the inventory section
@@ -104,3 +103,4 @@ export function isItemPresent(target: ItemStack): boolean {
             return target.isItemEqual(item)
         }).length > 0
 }
+
