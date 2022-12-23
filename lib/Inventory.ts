@@ -1,6 +1,6 @@
 import { itemId, itemName, ItemStack } from "./Item"
 
-export type ItemSlot = [number, ItemStack]
+export type ItemSlot = [slot: number, item: ItemStack]
 
 export enum InventoryStorageSections {
     hotbar = "hotbar",
@@ -62,6 +62,12 @@ export function getCraftingSlotItems(): ItemSlot[] {
 
 export function getStorageSlotItems(): ItemSlot[] {
     return getEntireSectionItems(InventoryStorageSections)
+}
+
+export function getHeldItem(): ItemStack {
+    return getInvSectionItems(InventoryStorageSections.hotbar)[
+        Player.openInventory().getSelectedHotbarSlotIndex()
+    ][1]
 }
 
 export function slotCount(): number {
