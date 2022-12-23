@@ -4,7 +4,7 @@ const {itemId} = require("../../lib/item.js")
 /******** CONFIG ********/
 
 // maximum durability prevent usage at
-const MIN_DURABILITY = 10
+const MIN_DURABILITY = 15
 const items = [
     "minecraft:diamond_pickaxe",
     "minecraft:diamond_hoe",

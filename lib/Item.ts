@@ -1,4 +1,5 @@
 export type ItemStack = Java.xyz.wagyourtail.jsmacros.client.api.helpers.ItemStackHelper 
+export type NBTElementHelper = Java.xyz.wagyourtail.jsmacros.client.api.helpers.NBTElementHelper<any>
 
 export function itemName(item: ItemStack): string {
     return item.getDefaultName().getString()

@@ -77,7 +77,7 @@ export class Logger {
         const message: string = `${prefix}:${optionals} ${arg}\n`
         
         if (display)
-            Chat.log(message)
+            Chat.log(arg)
         if (this.output_filename)
             FS.open(this.output_filename).append(message)
     }
