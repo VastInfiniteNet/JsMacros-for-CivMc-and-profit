@@ -1,7 +1,7 @@
 import { Logger, LogOptions } from "../lib/Logger"
 import { playerPos } from "../lib/Player"
 
-const logger: Logger = new Logger("diamond pause", "dpause.log", LogOptions.direction | LogOptions.positioning)
+const logger: Logger = new Logger("diamond pause", "dpause.log", LogOptions.DIRECTION | LogOptions.POSITIONING)
 
 function prevent() {
     const content = (event as Events.RecvMessage).text.getString()

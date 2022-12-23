@@ -4,8 +4,9 @@ import { DIRECTIONS, getDirection } from "./Navigation"
 import { playerPos } from "./Player"
 
 export enum LogOptions {
-    positioning =   1 << 0, // includes current player location
-    direction =     1 << 1, // include current player direction
+    NONE        =   0,
+    POSITIONING =   1 << 0, // includes current player location
+    DIRECTION =     1 << 1, // include current player direction
     temp3 =         1 << 2,
     temp4 =         1 << 3,
     temp5 =         1 << 4,
@@ -40,7 +41,7 @@ export class Logger {
      */
     constructor(name: string, 
                 outputFile: string = "", 
-                options: number = 0) 
+                options: number = LogOptions.NONE) 
     {
         this.name = name
         if (!FS.exists(Constants.LOG_FOLDER + Constants.SERVER_FOLDER))
@@ -69,8 +70,8 @@ export class Logger {
         // optionals
         let optionals: string = ''
         if (this.options) {
-            optionals += this.options & LogOptions.positioning ? ` [${roundPosArray(playerPos())}]` : ''
-            optionals += this.options & LogOptions.direction ? ` [${DIRECTIONS[getDirection()]}]` : ''
+            optionals += this.options & LogOptions.POSITIONING ? ` [${roundPosArray(playerPos())}]` : ''
+            optionals += this.options & LogOptions.DIRECTION ? ` [${DIRECTIONS[getDirection()]}]` : ''
         }
         
         const message: string = `${prefix}:${optionals} ${arg}\n`
