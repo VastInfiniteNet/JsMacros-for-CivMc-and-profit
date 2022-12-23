@@ -23,12 +23,13 @@ export enum Loglevel {
 /**
  * Logger that logs lol.
  */
-class Logger {
+export class Logger {
     
 
     name: string
     output_filename: string
     options: number
+    enabled: boolean
     
 
     /**
@@ -46,6 +47,7 @@ class Logger {
             FS.makeDir(Constants.LOG_FOLDER + Constants.SERVER_FOLDER)
         this.output_filename = Constants.LOG_FOLDER + Constants.SERVER_FOLDER + outputFile
         this.options = options
+        this.enabled = true
     }
 
     /**
@@ -54,30 +56,29 @@ class Logger {
      * @param {number} level priority of what to log
      */
     log(arg: string, level: number=Loglevel.debug, display: boolean=false) {
-        if (display)
-            Chat.log(arg)
+        if (!this.enabled)
+            return
 
-        if (this.output_filename) {
-            // prefixes 
-            const d = new Date()
-            const date_prefix = `[${ d.toLocaleDateString()} ${d.toLocaleTimeString()}]`
-            const log_level_prefix = `[${Loglevel[level]}]`
-            const logger_name = `[${this.name}]`
+        // prefixes 
+        const d = new Date()
+        const date_prefix: string = `[${ d.toLocaleDateString()} ${d.toLocaleTimeString()}]`
+        const log_level_prefix: string = `[${Loglevel[level]}]`
+        const logger_name: string = `[${this.name}]`
+        const prefix: string = `${date_prefix} ${logger_name} ${log_level_prefix}`
 
-            const prefix = `${date_prefix} ${logger_name} ${log_level_prefix}`
-
-            // optionals
-            let optionals = ''
-            if (this.options) {
-                optionals += this.options & LogOptions.positioning ? ` [${roundPosArray(playerPos())}]` : ''
-                optionals += this.options & LogOptions.direction ? ` [${DIRECTIONS[getDirection()]}]` : ''
-            }
-           
-            
-            const message = `${prefix}:${optionals} ${arg}\n`
-
-            FS.open(this.output_filename).append(message)
+        // optionals
+        let optionals: string = ''
+        if (this.options) {
+            optionals += this.options & LogOptions.positioning ? ` [${roundPosArray(playerPos())}]` : ''
+            optionals += this.options & LogOptions.direction ? ` [${DIRECTIONS[getDirection()]}]` : ''
         }
+        
+        const message: string = `${prefix}:${optionals} ${arg}\n`
+        
+        if (display)
+            Chat.log(message)
+        if (this.output_filename)
+            FS.open(this.output_filename).append(message)
     }
 
     Info(arg:string, display: boolean=false) {
@@ -113,5 +114,3 @@ class Logger {
         return `Logger '${this.name}' ${this.output_filename ? this.output_filename : ''} ${this.options}`
     }
 }
-
-export {Logger}
