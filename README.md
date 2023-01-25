@@ -18,6 +18,8 @@ The most valuable resource on CivMc is time, scripts are one way to be more effi
 ## How do I use this?
 [Download](https://www.curseforge.com/minecraft/mc-mods/jsmacros) and install [JsMacros](https://jsmacros.wagyourtail.xyz/?/general.html). There is a very basic, of little use ["tutorial"](https://jsmacros.wagyourtail.xyz/?/tutorial.html). You want to put the scripts in your path/to/instance/config/jsMacros/Macros/scripts folder and then bind the scripts to events, keys, or add as a service. You can always try to contact me using the info listed below. I personally have used the documentation and github source code to solve most my problems. If that doesn't help, try the [JsMacros discord](https://discord.com/invite/P6W58J8).
 
+I have made my own [getting started](https://github.com/VastInfiniteNet/JsMacros-Getting-Started) tutorial on installing JsMacros, configuring, and setting up your first script!
+
 ## Contribute?
 If you are interested in contributing, feel free to make a PR to add a script! There are certainly mainly bugs, so feel free to help fix them or tell me about them!
 
