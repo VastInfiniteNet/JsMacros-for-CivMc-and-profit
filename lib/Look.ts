@@ -1,9 +1,23 @@
+import { anglify } from "./Math";
+
 const user = Player.getPlayer();
-const directions = {
-    north: -180,
-    east: -90,
-    south: 0,
-    west: 90,
+enum CardinalDirection {
+    NORTH = -180,
+    EAST = -90,
+    SOUTH = 0,
+    WEST = 90,
+}
+
+enum VerticalDirection {
+    UP = -90,
+    FORWARD = 0,
+    DOWN = 90 
+}
+
+enum HorizontalDirection {
+    LEFT = -90,
+    RIGHT = 90,
+    BACKWARDS = 180
 }
 
 /**
@@ -19,11 +33,12 @@ export function lookBlock(x: number = user.getX(), y: number = user.getY(), z: n
         Client.waitTick(wait);
 }
 
+
 /**
  * Turns to the player to a specific pitch and yaw.
- * @param {number} pitch the veritcal rotation degree.
- * @param {number} yaw the horizontal rotiation degree.
- * @param {number} wait optional lenth of time to wait after action.
+ * @param {number} pitch - the veritcal rotation degree.
+ * @param {number} yaw - the horizontal rotiation degree.
+ * @param {number} wait - optional lenth of time to wait after action.
  */
 export function lookAngle(pitch: number = user.getPitch(), yaw: number = user.getYaw(), wait: number = 0) {
     user.lookAt(yaw, pitch);
@@ -31,10 +46,12 @@ export function lookAngle(pitch: number = user.getPitch(), yaw: number = user.ge
         Client.waitTick(wait);
 }
 
-
-export function flipYaw(): void {
-    user.lookAt(user.getYaw()+180, user.getPitch())
+export function turnAngle(pitch: number = 0, yaw: number = 0, wait: number = 0) {
+    const newPitch = pitch != 0 ? anglify(user.getPitch() + pitch) : user.getPitch() 
+    const newYaw = yaw != 0 ? anglify(user.getYaw() + yaw) : user.getPitch() 
+    lookAngle( newPitch, newYaw, wait)
 }
+
 
 /**
  * Gets the yaw direction vector.
@@ -44,13 +61,54 @@ export function flipYaw(): void {
 export function horLookVec(yaw: number): [number, number] {
     const vec: [number, number] = [0, 0]
     const absYaw: number = Math.abs(yaw)
-    if (yaw > 0)
+
+    if (yaw > CardinalDirection.SOUTH)
         vec[0] = -1
-    if (yaw < 0)
+    if (yaw < CardinalDirection.SOUTH)
         vec[0] = 1
-    if (absYaw > directions.west) 
+    if (absYaw > CardinalDirection.WEST) 
         vec[1] = -1
-    if (absYaw < directions.west)
+    if (absYaw < CardinalDirection.WEST)
         vec[1] = 1
+
     return vec
 }
+
+/** Make player look straight down at ground */
+export function lookDown(wait: number = 0) {
+    lookAngle(VerticalDirection.DOWN, undefined, wait)
+}
+
+/** Make player look straight forward */
+export function lookForward(wait: number = 0) {
+    lookAngle(VerticalDirection.FORWARD, undefined, wait)
+}
+
+/** Make player look straight backwards */
+export function lookBackwards(wait: number = 0) {
+    lookForward()
+    turnAround(wait)
+}
+
+/** Make player look straight up at the sky */
+export function lookUp(wait: number = 0) {
+    lookAngle(VerticalDirection.UP, undefined, wait)
+}
+
+/** Turn player 180 degrees around */
+export function turnAround(wait: number = 0) {
+    turnAngle(undefined, HorizontalDirection.BACKWARDS, wait)
+}
+
+/** Turn player 90 degrees to the left */
+export function turnLeft(wait: number = 0) {
+    turnAngle(undefined, HorizontalDirection.LEFT, wait)
+}
+
+/** Turn player 90 degrees to the right */
+export function turnRight(wait: number = 0) {
+    turnAngle(undefined, HorizontalDirection.RIGHT, wait)
+}
+
+
+lookBackwards()
