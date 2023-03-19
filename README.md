@@ -5,7 +5,7 @@ Currently most scripts are JavaScript. I am using this to help learn basic JavaS
 
 I am in the process of learning about TypeScript and am transitioning all scripts being primiarly written in TS and having a JS verison as well.
 
-While in transition only the TypeScript versions will be available.
+While in transition only the TypeScript versions are fully updated and available. JavaScript versions may be available, but may be out of date or potentially broken.
 
 ## What is this for?
 These scripts were made and intended to be used on [CivMc](https://www.reddit.com/r/CivMC/) minecraft server. Scripts were made to follow the [rules](https://civwiki.org/wiki/Botting#Botting_Rules) on said server. 
