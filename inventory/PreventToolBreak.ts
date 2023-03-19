@@ -13,6 +13,7 @@ const PROTECTED_ITEM_IDS: string[] = [
     "minecraft:diamond_axe"
 ]
 /******** END OF CONFIG ********/
+
 const itemChangeEvent : Events.HeldItemChange = event as Events.HeldItemChange
 
 function prevent(oldI: ItemStack = itemChangeEvent.oldItem, newI: ItemStack = itemChangeEvent.item): boolean {
@@ -27,7 +28,7 @@ function prevent(oldI: ItemStack = itemChangeEvent.oldItem, newI: ItemStack = it
     }
 
     const inv = Player.openInventory()
-    const current_slot = getInvSectionSlots(InventoryStorageSections.hotbar)[0] + inv.getSelectedHotbarSlotIndex()
+    const current_slot = getInvSectionSlots(InventoryStorageSections.HOTBAR)[0] + inv.getSelectedHotbarSlotIndex()
     Chat.log(`WARNING TOOL LOW DURABILITY: ${max_damage - damage}`)
     inv.swapHotbar(current_slot, 40)
     return true

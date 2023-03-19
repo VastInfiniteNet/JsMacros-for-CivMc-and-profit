@@ -3,19 +3,19 @@ import { itemId, itemName, ItemStack } from "./Item"
 export type ItemSlot = [slot: number, item: ItemStack]
 
 export enum InventoryStorageSections {
-    hotbar = "hotbar",
-    main = "main",
-    offhand = "offhand"
+    HOTBAR = "hotbar",
+    MAIN = "main",
+    OFFHAND = "offhand"
 }
 export enum ArmorSlotSections {
-    helmet = "helmet",
-    chestplate = "chestplate",
-    leggings = "leggings",
-    boots = "boots"
+    HELMET = "helmet",
+    CHESTPLATE = "chestplate",
+    LEGGINGS = "leggings",
+    BOOTS = "boots"
 }
 export enum CraftingSlotSections{
-    crafting_in = "crafting_in",
-    craft_out = "craft_out"
+    CRAFTING_IN = "crafting_in",
+    CRAFT_OUT = "craft_out"
 } 
 type InventorySection = InventoryStorageSections | ArmorSlotSections | CraftingSlotSections
 
@@ -64,7 +64,7 @@ export function getStorageSlotItems(): ItemSlot[] {
 }
 
 export function getHeldItem(): ItemStack {
-    return getInvSectionItems(InventoryStorageSections.hotbar)[
+    return getInvSectionItems(InventoryStorageSections.HOTBAR)[
         Player.openInventory().getSelectedHotbarSlotIndex()
     ][1]
 }

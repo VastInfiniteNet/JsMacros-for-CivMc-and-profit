@@ -7,8 +7,8 @@ export enum LogOptions {
     NONE        =   0,
     POSITIONING =   1 << 0, // includes current player location
     DIRECTION =     1 << 1, // include current player direction
-    temp3 =         1 << 2,
-    temp4 =         1 << 3,
+    CHUNK =         1 << 2,
+    QUADRANT =      1 << 3,
     temp5 =         1 << 4,
 }
 
@@ -72,6 +72,8 @@ export class Logger {
         if (this.options) {
             optionals += this.options & LogOptions.POSITIONING ? ` [${roundPosArray(playerPos())}]` : ''
             optionals += this.options & LogOptions.DIRECTION ? ` [${DIRECTIONS[getDirection()]}]` : ''
+            optionals += this.options & LogOptions.CHUNK ? ` [CHUNK]` : ''
+            optionals += this.options & LogOptions.QUADRANT ? ` [QUADRANT]` : ''
         }
         
         const message: string = `${prefix}:${optionals} ${arg}\n`

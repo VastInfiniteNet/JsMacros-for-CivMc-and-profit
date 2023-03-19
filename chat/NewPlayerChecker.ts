@@ -1,7 +1,7 @@
 import { Logger } from "../lib/Logger"
 import { findText } from "./MessageLooker"
 
-const logger: Logger = new Logger("NEw player namechecker", "namechecker.log")
+const logger: Logger = new Logger("New player namechecker", "namechecker.log")
 
 function check() {
     const content: string[] = (event as Events.RecvMessage).text.getString().split(" ")
