@@ -3,9 +3,9 @@ This is a repo for helpful scripts, and (hopefully) useful resources for learnin
 
 Currently most scripts are JavaScript. I am using this to help learn basic JavaScript outside of a web dev context.
 
-I am in the process of learning about TypeScript and am transitioning all scripts being primiarly written in TS and having a JS verison as well.
+I am in the process of learning about TypeScript. I am slowly transitioning all scripts to being primiarily written in TS and having a JS verison as well.
 
-While in transition only the TypeScript versions are fully updated and available. JavaScript versions may be available, but may be out of date or potentially broken.
+While in transition only the TypeScript versions are fully updated and available. JavaScript versions may be available, but are likely out of date or potentially broken.
 
 ## What is this for?
 These scripts were made and intended to be used on [CivMc](https://www.reddit.com/r/CivMC/) minecraft server. Scripts were made to follow the [rules](https://civwiki.org/wiki/Botting#Botting_Rules) on said server. 
@@ -21,7 +21,7 @@ The most valuable resource on CivMc is time, scripts are one way to be more effi
 I have made my own [getting started](https://github.com/VastInfiniteNet/JsMacros-Getting-Started) tutorial on installing JsMacros, configuring, and setting up your first script!
 
 ## Contribute?
-If you are interested in contributing, feel free to make a PR to add a script! There are certainly mainly bugs, so feel free to help fix them or tell me about them!
+If you are interested in contributing, feel free to make a PR to add a script! There are certainly bugs, so feel free to help fix them or tell me about them!
 
 ## Rules
 The main rules are as follows:
