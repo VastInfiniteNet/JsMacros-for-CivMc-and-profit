@@ -1,6 +1,6 @@
 import { Constants } from "./Constants"
 import { roundPosArray } from "./Coords"
-import { DIRECTIONS, getDirection } from "./Navigation"
+import { Direction, getDirection } from "./Navigation"
 import { playerPos } from "./Player"
 
 export enum LogOptions {
@@ -71,7 +71,7 @@ export class Logger {
         let optionals: string = ''
         if (this.options) {
             optionals += this.options & LogOptions.POSITIONING ? ` [${roundPosArray(playerPos())}]` : ''
-            optionals += this.options & LogOptions.DIRECTION ? ` [${DIRECTIONS[getDirection()]}]` : ''
+            optionals += this.options & LogOptions.DIRECTION ? ` [${Direction[getDirection()]}]` : ''
             optionals += this.options & LogOptions.CHUNK ? ` [CHUNK]` : ''
             optionals += this.options & LogOptions.QUADRANT ? ` [QUADRANT]` : ''
         }

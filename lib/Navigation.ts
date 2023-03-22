@@ -1,18 +1,28 @@
-export enum DIRECTIONS {
+/**
+ * Not sure. Probably more movement based functions than Look.ts.
+ */
+
+
+export enum Direction {
     NORTH = -180,
     EAST = -90,
     SOUTH = 0,
     WEST = 90
 }
 
-export function getDirection(yaw:number = Player.getPlayer().getYaw()): DIRECTIONS {
+/**
+ * Get the direction from yaw angle
+ * @param yaw 
+ * @returns 
+ */
+export function getDirection(yaw:number = Player.getPlayer().getYaw()): Direction {
     if (yaw >= 135)
-        return DIRECTIONS.NORTH
+        return Direction.NORTH
     if (yaw >= 45)
-        return DIRECTIONS.WEST
+        return Direction.WEST
     if (yaw >= -45)
-        return DIRECTIONS.SOUTH
+        return Direction.SOUTH
     if (yaw >= -135)
-        return DIRECTIONS.EAST
-    return DIRECTIONS.NORTH
+        return Direction.EAST
+    return Direction.NORTH
 }

@@ -1,3 +1,7 @@
+/**
+ * IDK
+ */
+
 import { pos3dToPosArray } from "./Coords"
 
 export function playerPos() {

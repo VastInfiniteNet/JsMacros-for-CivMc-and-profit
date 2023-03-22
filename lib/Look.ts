@@ -1,6 +1,9 @@
 import { anglify } from "./Math";
 
 const user = Player.getPlayer();
+
+//#region enums
+
 enum CardinalDirection {
     NORTH = -180,
     EAST = -90,
@@ -20,12 +23,16 @@ enum HorizontalDirection {
     BACKWARDS = 180
 }
 
+//#endregion
+
+//#region base look/turn functions
+
 /**
- * Turns where player is looking to a specific block.
- * @param {number} x x coordinate of block to look at
- * @param {number} y y coordinate of block to look at
- * @param {number} z z coordinate of block to look at
- * @param {number} wait optional length of time to wait after action 
+ * Turns player to look at a specific block.
+ * @param {number} x - x coordinate of block to look at
+ * @param {number} y - y coordinate of block to look at
+ * @param {number} z - z coordinate of block to look at
+ * @param {number} wait - optional length of time to wait after action 
  */
 export function lookBlock(x: number = user.getX(), y: number = user.getY(), z: number = user.getZ(), wait: number = 0) {
     user.lookAt(x, y, z);
@@ -37,7 +44,7 @@ export function lookBlock(x: number = user.getX(), y: number = user.getY(), z: n
 /**
  * Turns to the player to a specific pitch and yaw.
  * @param {number} pitch - the veritcal rotation degree.
- * @param {number} yaw - the horizontal rotiation degree.
+ * @param {number} yaw - the veritcal rotation degree.
  * @param {number} wait - optional lenth of time to wait after action.
  */
 export function lookAngle(pitch: number = user.getPitch(), yaw: number = user.getYaw(), wait: number = 0) {
@@ -46,16 +53,24 @@ export function lookAngle(pitch: number = user.getPitch(), yaw: number = user.ge
         Client.waitTick(wait);
 }
 
+/**
+ * Turn the player a specific pitch and yaw amount relative to player's current pitch and yaw.
+ * @param {number} pitch - the veritcal rotation degree.
+ * @param {number} yaw - the veritcal rotation degree.
+ * @param {number} wait - optional lenth of time to wait after action.
+ */
 export function turnAngle(pitch: number = 0, yaw: number = 0, wait: number = 0) {
     const newPitch = pitch != 0 ? anglify(user.getPitch() + pitch) : user.getPitch() 
     const newYaw = yaw != 0 ? anglify(user.getYaw() + yaw) : user.getPitch() 
     lookAngle( newPitch, newYaw, wait)
 }
 
+//#endregion
+
 
 /**
- * Gets the yaw direction vector.
- * @param {number} yaw 
+ * Gets the yaw (horizontal) direction vector.
+ * @param {number} yaw  - yaw to get the horizontal direction vector of
  * @returns movement vector denoting x/z direction
  */
 export function horLookVec(yaw: number): [number, number] {
@@ -64,15 +79,17 @@ export function horLookVec(yaw: number): [number, number] {
 
     if (yaw > CardinalDirection.SOUTH)
         vec[0] = -1
-    if (yaw < CardinalDirection.SOUTH)
+    else if (yaw < CardinalDirection.SOUTH)
         vec[0] = 1
     if (absYaw > CardinalDirection.WEST) 
         vec[1] = -1
-    if (absYaw < CardinalDirection.WEST)
+    else if (absYaw < CardinalDirection.WEST)
         vec[1] = 1
 
     return vec
 }
+
+//#region look/turn wrappers
 
 /** Make player look straight down at ground */
 export function lookDown(wait: number = 0) {
@@ -110,5 +127,5 @@ export function turnRight(wait: number = 0) {
     turnAngle(undefined, HorizontalDirection.RIGHT, wait)
 }
 
-
-lookBackwards()
+//#endregion
+0
