@@ -1,6 +1,6 @@
 export namespace Constants {
     /** base of log saving */
-    export const LOG_FOLDER: string = 'E:\\MultiMc\\instances\\1.18.2\\.minecraft\\config\\jsMacros\\Macros\\typescript\\logs\\'
+    export const LOG_FOLDER: string = '..\\..\\logs\\'
 
     /** specific folder logs will be saved in. Default is server address  */
     export const SERVER_FOLDER: string = World.getCurrentServerAddress().split("/")[0] + "\\"
@@ -10,4 +10,6 @@ export namespace Constants {
 
     /** set to change what the namelayer group will be joined upon joining a server */
     export const DEFAULT_GC_GROUP: string = "!"
+
+    export const SOUNDS_ENABLED: boolean = false
 }

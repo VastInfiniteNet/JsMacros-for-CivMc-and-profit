@@ -44,9 +44,11 @@ export class Logger {
                 options: number = LogOptions.NONE) 
     {
         this.name = name
-        if (!FS.exists(Constants.LOG_FOLDER + Constants.SERVER_FOLDER))
-            FS.makeDir(Constants.LOG_FOLDER + Constants.SERVER_FOLDER)
-        this.output_filename = Constants.LOG_FOLDER + Constants.SERVER_FOLDER + outputFile
+        const worldFolderName = (World.getPlayers().size() > 1) ? Constants.SERVER_FOLDER : "SinglePlayer"
+        const logPath = Constants.LOG_FOLDER + worldFolderName + "/"
+        if (!FS.exists(logPath))
+            FS.makeDir(logPath)
+        this.output_filename = logPath + outputFile
         this.options = options
         this.enabled = true
     }
