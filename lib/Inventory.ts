@@ -3,6 +3,7 @@
  */
 
 import { itemId, itemName, ItemStack } from "./Item"
+import { Delegate } from "./Types"
 
 //#region enums
 export enum InventoryStorageSections {
@@ -24,6 +25,7 @@ export enum CraftingSlotSections{
 
 export type ItemSlot = [slot: number, item: ItemStack]
 export type InventorySection = InventoryStorageSections | ArmorSlotSections | CraftingSlotSections
+export type InventorySectionType = typeof ArmorSlotSections | typeof InventoryStorageSections | typeof CraftingSlotSections
 
 //#region get inventory section
 
@@ -46,9 +48,7 @@ export function getInvSectionItems(section: InventorySection): ItemSlot[] {
 }
 
 /** Get items from an entire inventory section */
-function getEntireSectionItems(section: typeof ArmorSlotSections | 
-                                        typeof InventoryStorageSections | 
-                                        typeof CraftingSlotSections): ItemSlot[] {
+function getEntireSectionItems(section: InventorySectionType): ItemSlot[] {
     let sectionItems: ItemSlot[] = []
     for (var subsection in section) {
         Chat.log(subsection)
@@ -90,13 +90,13 @@ export function slotCount(): number {
     return Player.openInventory().getTotalSlots()
 }
 
-//#region find in inventory actions
+//#region find in inventory
 
 /**
  * Return list of items in player inventory that pass the predicate.
  * @param predicate function that takes an item to check and the current item list as the parameters.
  */
-export function findInInventory(predicate: (item: ItemStack, itemList: ItemSlot[]) => boolean): ItemSlot[] {
+export function findInInventory(predicate: Delegate<ItemStack, ItemSlot, boolean>): ItemSlot[] {
     const items: ItemSlot[] = []
 
     for (let [idx,item] of getAllInventoryItems()) {
@@ -109,7 +109,7 @@ export function findInInventory(predicate: (item: ItemStack, itemList: ItemSlot[
 }
 
 /** Find items in inventoruy with same item id or item name. */
-export function findSimiliarItems(  name:string = null, id:string = null): ItemSlot[] {
+export function findSimiliarItems(name:string = null, id:string = null): ItemSlot[] {
     return findInInventory(
         (item: ItemStack, _) => {
             return itemName(item) == name || itemId(item) == id

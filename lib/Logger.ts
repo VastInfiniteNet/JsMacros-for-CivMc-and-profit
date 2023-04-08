@@ -39,10 +39,11 @@ export class Logger {
      * @param {string} outputFile log file location
      * @param {object} options additional logging options
      */
-    constructor(name: string, 
-                outputFile: string = "", 
-                options: number = LogOptions.NONE) 
-    {
+    constructor(
+        name: string, 
+        outputFile: string = "", 
+        options: number = LogOptions.NONE
+    ) {
         this.name = name
         const worldFolderName = (World.getPlayers().size() > 1) ? Constants.SERVER_FOLDER : "SinglePlayer"
         const logPath = Constants.LOG_FOLDER + worldFolderName + "/"
