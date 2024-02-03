@@ -65,11 +65,11 @@ function replace(oldI=event.oldItem, newI=event.item, offHand=event.offHand) {
         currentSlot = offHandSlot()[0]
     }
 
-    Client.waitTick(2)
+    let waitAmount = 3;
+    Client.waitTick(waitAmount)
     inv.swap(currentSlot, replacementSlot)
-    Client.waitTick(2)
     World.playSound("entity.player.levelup", 1, 1)
-    Client.waitTick(2)
+    Client.waitTick(waitAmount)
     logger.Prod("Replaced item!")
     GlobalVars.putBoolean("replaceSwap", true)
     return true

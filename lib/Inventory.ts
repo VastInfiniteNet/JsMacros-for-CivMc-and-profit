@@ -51,7 +51,6 @@ export function getInvSectionItems(section: InventorySection): ItemSlot[] {
 function getEntireSectionItems(section: InventorySectionType): ItemSlot[] {
     let sectionItems: ItemSlot[] = []
     for (var subsection in section) {
-        Chat.log(subsection)
         sectionItems = sectionItems.concat(getInvSectionItems(section[subsection]))
     }
     return sectionItems

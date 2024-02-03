@@ -17,8 +17,8 @@ const PROTECTED_ITEM_IDS: string[] = [
 const itemChangeEvent : Events.HeldItemChange = event as Events.HeldItemChange
 
 function prevent(oldI: ItemStack = itemChangeEvent.oldItem, newI: ItemStack = itemChangeEvent.item): boolean {
-    const damage = newI.getDamage()
-    const max_damage = newI.getMaxDamage()
+    const damage: number = newI.getDamage()
+    const max_damage: number = newI.getMaxDamage()
 
     if (itemId(oldI) !== itemId(newI) || !PROTECTED_ITEM_IDS.includes(itemId(newI)) || isItemPresent(oldI)) { 
         return false
@@ -29,7 +29,7 @@ function prevent(oldI: ItemStack = itemChangeEvent.oldItem, newI: ItemStack = it
 
     const inv = Player.openInventory()
     const current_slot = getInvSectionSlots(InventoryStorageSections.HOTBAR)[0] + inv.getSelectedHotbarSlotIndex()
-    Chat.log(`WARNING TOOL LOW DURABILITY: ${max_damage - damage}`)
+    Chat.log(`WARNING TOOL LOW DURABILITY: ${max_damage - damage}`);
     inv.swapHotbar(current_slot, 40)
     return true
 }

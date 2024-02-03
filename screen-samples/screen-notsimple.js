@@ -45,15 +45,30 @@ let elements = [
     }
 ];
 
+function cleanScreenParams(e) {
+    return {
+        add: e.add,
+        text: e.text.toString(),
+        width: Math.floor(e.width),
+        height: Math.floor(e.height), 
+        xOffset: Math.floor(e.xOffset),
+        yOffset: Math.floor(e.yOffset),
+        callback: e.callback
+    }
+}
+
 // what the initial screen should look like
 function initScreen()
 {
     // adds elements to the screen
-    elements.forEach(e => {
+    elements.forEach(o => {
+        let = e = cleanScreenParams(o)
+        Chat.log(e.text)
         let method = e.add;
         method(e.xOffset, e.yOffset, e.width, e.height, e.text,
             JavaWrapper.methodToJava(e.callback));
     });
+    
 }
 
 // how to initialize the screen
